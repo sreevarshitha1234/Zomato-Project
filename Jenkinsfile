@@ -29,7 +29,7 @@ pipeline{
 		stage("Code Quality Gates"){
 			steps{
 				script{
-					timeout(time: 2, unit: 'MINUTES')
+					 timeout(time: 2, unit: 'MINUTES')
 					waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
 				}
 			}
