@@ -62,6 +62,11 @@ pipeline{
 					}
 				}
 			}
+		stage("TRIVY is Image Scanning"){
+			steps{
+				sh "trivy image thanish/cloudzomato:latest >trivy.txt"
+			}
+		}
 
 
 
