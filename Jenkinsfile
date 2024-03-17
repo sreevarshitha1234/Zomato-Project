@@ -23,7 +23,14 @@ pipeline{
 				withSonarQubeEnv('sonar-scanner'){
 					sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=zomato \
                     -Dsonar.projectKey=zomato '''
-
+				}
+			}
+		}
+		stage("Code Quality Gates"){
+			steps{
+				script{
+					timeout(time: 2, unit: 'MINUTES')
+					waitForQualityGate abortPipeline: false, credentialsId: 'Sonar-token'
 				}
 			}
 		}
