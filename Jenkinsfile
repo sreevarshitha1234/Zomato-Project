@@ -67,10 +67,10 @@ pipeline{
 				sh "trivy image thanish/cloudzomato:latest >trivy.txt"
 			}
 		}
-
-
-
-
-
+		stage("Creating Docker Container "){
+			steps{
+				sh 'docker run -d --name zomato-app ph zomato -p 3000:3000 thanish/cloudzomato:latest'
+			}
+		}
 	}
 }
