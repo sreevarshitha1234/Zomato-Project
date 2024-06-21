@@ -15,7 +15,7 @@ pipeline{
 		}
 		stage('Code Checkout From Git'){
 			steps{
-				git branch: 'main', url: 'https://github.com/Devops9AM/Zomato-Project.git'
+				git branch: 'main', url: 'https://github.com/Cloud-Gen-DevOps-Projects/Zomato-Project.git'
 			}
 		}
 		stage("SonarQube Code Analysis"){
@@ -30,7 +30,7 @@ pipeline{
 			steps{
 				script{
 					 timeout(time: 2, unit: 'MINUTES'){
-					waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
+					waitForQualityGate abortPipeline: false, credentialsId: 'Sonar-token'
 				}
 			}
 		}
