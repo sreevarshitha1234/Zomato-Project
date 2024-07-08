@@ -15,7 +15,7 @@ pipeline{
 		}
 		stage('Code Checkout From Git'){
 			steps{
-				git branch: 'main', url: 'https://github.com/Cloud-Gen-DevOps-Projects/Zomato-Project.git'
+				git branch: 'main', url: 'https://github.com/sreevarshitha1234/Zomato-Project.git'
 			}
 		}
 		stage("SonarQube Code Analysis"){
@@ -30,7 +30,7 @@ pipeline{
 			steps{
 				script{
 					 timeout(time: 2, unit: 'MINUTES'){
-					waitForQualityGate abortPipeline: false, credentialsId: 'Sonar-token'
+					waitForQualityGate abortPipeline: false, credentialsId: 'sonar-server'
 				}
 			}
 		}
@@ -56,20 +56,20 @@ pipeline{
 				script{
 				withDockerRegistry(credentialsId: 'docker-hub', toolName: 'docker'){
 					sh "docker build -t cloudzomato . "
-					sh "docker tag cloudzomato thanish/cloudzomato:latest"
-					sh "docker push thanish/cloudzomato:latest"
+					sh "docker tag cloudzomato 192.168.121.129:8085/cloudzomato:latest"
+					sh "docker push 192.168.121.129:8085/cloudzomato:latest"
 						}
 					}
 				}
 			}
 		stage("TRIVY is Image Scanning"){
 			steps{
-				sh "trivy image thanish/cloudzomato:latest >trivy.txt"
+				sh "trivy image 192.168.121.129:8085/cloudzomato:latest >trivy.txt"
 			}
 		}
 		stage("Creating Docker Container "){
 			steps{
-				sh 'docker run -d --name zomato-app -h zomato -p 3000:3000 thanish/cloudzomato:latest'
+				sh 'docker run -d --name zomato-app -h zomato -p 3000:3000 192.168.121.129:8085/cloudzomato:latest'
 			}
 		}
 	}
