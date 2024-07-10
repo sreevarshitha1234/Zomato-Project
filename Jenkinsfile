@@ -55,21 +55,21 @@ pipeline{
 			steps{
 				script{
 				withDockerRegistry(credentialsId: 'docker-hub', toolName: 'docker'){
-					sh "docker build -t cloudzomato . "
-					sh "docker tag cloudzomato 192.168.121.129:8085/cloudzomato:latest"
-					sh "docker push 192.168.121.129:8085/cloudzomato:latest"
+					sh "docker build -t zomato . "
+					sh "docker tag zomato 192.168.121.129:8085/zomato:latest"
+					sh "docker push 192.168.121.129:8085/zomato:latest"
 						}
 					}
 				}
 			}
 		stage("TRIVY is Image Scanning"){
 			steps{
-				sh "trivy image 192.168.121.129:8085/cloudzomato:latest >trivy.txt"
+				sh "trivy image 192.168.121.129:8085/zomato:latest >trivy.txt"
 			}
 		}
 		stage("Creating Docker Container "){
 			steps{
-				sh 'docker run -d --name zomato-app -h zomato -p 3000:3000 192.168.121.129:8085/cloudzomato:latest'
+				sh 'docker run -d --name zomato-app -h zomato -p 3000:3000 192.168.121.129:8085/zomato:latest'
 			}
 		}
 	}
