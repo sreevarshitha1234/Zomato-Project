@@ -54,7 +54,7 @@ pipeline{
 		stage("DOcker Image Build and Push"){
 			steps{
 				script{
-				withDockerRegistry(credentialsId: 'docker-hub', toolName: 'docker'){
+				withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){
 					sh "docker build -t zomato . "
 					sh "docker tag zomato 192.168.121.143:8085/zomato:latest"
 					sh "docker push 192.168.121.143:8085/zomato:latest"
